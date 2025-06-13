@@ -45,7 +45,7 @@ public class SaleController {
 	public ResponseEntity<Page<RelatoryDTO>> getReport(@RequestParam(required = false ) String minDate,
 													   @RequestParam(required = false) String maxDate,
 													   @RequestParam(name = "name", defaultValue = "") String name,
-													   @RequestParam(required = false) Pageable pageable
+													   Pageable pageable
 
 	) {
 		Page<RelatoryDTO> result = service.searchRelatory(minDate, maxDate, name, pageable);

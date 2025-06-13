@@ -33,47 +33,42 @@ public class SaleService {
 
 	@Transactional(readOnly = true)
 	public List<SummaryMinDTO> searchSummary(String minDate, String maxDate, String name){
-		LocalDate dataInicial;
-		LocalDate dataFinal;
-		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-
-		if( minDate == null ||  minDate.isBlank()){
-			dataInicial = today.minusYears(1L);
-		}
-		else{
-			dataInicial = LocalDate.parse(minDate);
-		}
-		if( maxDate == null  || maxDate.isBlank()){
-			dataFinal = today;
-		}
-		else{
-			dataFinal = LocalDate.parse(maxDate);
-		}
-
-
+		LocalDate dataInicial = validationMinDate(minDate);
+		LocalDate dataFinal = validationMaxDate(maxDate);
 		return repository.search1(dataInicial, dataFinal, name);
 	}
 
 	@Transactional(readOnly = true)
 	public Page<RelatoryDTO> searchRelatory(String minDate, String maxDate, String name, Pageable pageable){
-		LocalDate dataInicial;
-		LocalDate dataFinal;
-		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-
-		if( minDate == null ||  minDate.isBlank()){
-			dataInicial = today.minusYears(1L);
-		}
-		else{
-			dataInicial = LocalDate.parse(minDate);
-		}
-		if( maxDate == null  || maxDate.isBlank()){
-			dataFinal = today;
-		}
-		else{
-			dataFinal = LocalDate.parse(maxDate);
-		}
-
-
+		LocalDate dataInicial = validationMinDate(minDate);
+		LocalDate dataFinal = validationMaxDate(maxDate);
 		return repository.relatory(dataInicial, dataFinal, name, pageable);
+	}
+
+
+	private LocalDate validationMinDate(String date){
+		LocalDate data;
+		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		if( date == null ||  date.isBlank()){
+			data = today.minusYears(1L);
+		}
+		else{
+			data = LocalDate.parse(date);
+		}
+		return data;
+
+	}
+
+	private LocalDate validationMaxDate(String date){
+		LocalDate data;
+		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		if( date == null ||  date.isBlank()){
+			data = today;
+		}
+		else{
+			data = LocalDate.parse(date);
+		}
+		return data;
+
 	}
 }

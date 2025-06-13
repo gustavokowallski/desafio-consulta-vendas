@@ -22,7 +22,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "GROUP BY obj.seller.name")
     List<SummaryMinDTO> search1 (LocalDate minTime, LocalDate maxTime, String name);
 
-    @Query("SELECT new com.devsuperior.dsmeta.dto.RelatoryDTO(obj.seller.id, obj.date, obj.amount, obj.seller.name) " +
+    @Query("SELECT new com.devsuperior.dsmeta.dto.RelatoryDTO(obj.id, obj.date, obj.amount, obj.seller.name) " +
             "FROM Sale obj " +
             "JOIN obj.seller " +
             "WHERE obj.date BETWEEN :minTime AND :maxTime " +
